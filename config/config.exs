@@ -60,6 +60,12 @@ config :tailwind,
     cd: Path.expand("../assets", __DIR__)
   ]
 
+# Configures ueberauth
+config :ueberauth, Ueberauth,
+  providers: [
+    auth0: {Ueberauth.Strategy.Auth0, []}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

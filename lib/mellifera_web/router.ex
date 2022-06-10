@@ -20,6 +20,14 @@ defmodule MelliferaWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/auth", MelliferaWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :logout
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MelliferaWeb do
   #   pipe_through :api

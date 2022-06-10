@@ -74,3 +74,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :ueberauth, Ueberauth.Strategy.Auth0.OAuth,
+  domain: "fivein.auth0.com",
+  client_id: "LxRSkn133Rmo9VtJbTui0eFi66iTgIbN",
+  client_secret: "RRECjdXoOrc-cPHFA1mbB01uB4wiNSAKotWSdMLA7bwubuU94gWyQeUOHBggHaft"
