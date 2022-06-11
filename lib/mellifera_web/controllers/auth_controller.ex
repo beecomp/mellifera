@@ -20,7 +20,6 @@ defmodule MelliferaWeb.AuthController do
     conn
     |> redirect(to: "/")
 
-    #
     # case UserFromAuth.find_or_create(auth) do
     #   {:ok, user} ->
     #     conn

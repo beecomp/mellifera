@@ -7,6 +7,8 @@
     <meta name="csrf-token" content={csrf_token_value()} />
     <%= live_title_tag(assigns[:page_title] || "Mellifera", suffix: " · Phoenix Framework") %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")} />
+    <script src="//unpkg.com/alpinejs" defer>
+    </script>
     <script
       defer
       phx-track-static
@@ -17,21 +19,15 @@
   </head>
   <body>
     <header>
-      <section class="container">
+      <section>
         <nav>
-          <ul>
+          <ul class="flex space-x-4">
             <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <li><%= link("LiveDashboard", to: Routes.live_dashboard_path(@conn, :home)) %></li>
             <% end %>
           </ul>
         </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img
-            src={Routes.static_path(@conn, "/images/phoenix.png")}
-            alt="Phoenix Framework Logo"
-          />
-        </a>
       </section>
     </header>
     <%= @inner_content %>
