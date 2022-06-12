@@ -1,6 +1,7 @@
 defmodule Mellifera.Accounts do
   import Ecto.Query, warn: false
 
+  alias __MODULE__
   alias Mellifera.Repo
   alias Mellifera.Accounts.User
   alias Mellifera.Accounts.Login
@@ -8,9 +9,6 @@ defmodule Mellifera.Accounts do
   def list_users do
     Repo.all(User)
   end
-
-  def fetch_user(id), do: Repo.get(User, id)
-  def fetch_user(:email, email), do: User |> where([u], u.email == ^email) |> Repo.one()
 
   def create_user(attrs \\ %{}) do
     %User{}
@@ -28,19 +26,21 @@ defmodule Mellifera.Accounts do
     Repo.delete(user)
   end
 
-  def fetch_or_create(uid, %{email: _email} = _attrs) do
-    Repo.transaction(fn ->
-      case Repo.get(Login, uid) do
-        %Login{user_id: user_id} ->
-          User |> Repo.get(user_id)
+  def fetch_or_create([uid: uid], %{email: email} = attrs) do
+    case Login |> Repo.get_by(uid: uid) do
+      %Login{user: user} ->
+        User |> Repo.get(user)
 
-        nil ->
-          nil
-          # case fetch_user(:email, email) do
-          #   nil ->
-          #     nil
-          # end
-      end
-    end)
+      nil ->
+        user =
+          case User |> Repo.get_by(email: email) do
+            %User{} = user -> user
+            nil -> %User{} |> User.changeset(attrs) |> Repo.insert!()
+          end
+
+        %Login{}
+        |> Login.changeset(%{uid: uid, email: email, extra: %{}, user: user})
+        |> Repo.insert()
+    end
   end
 end

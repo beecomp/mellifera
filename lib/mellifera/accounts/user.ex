@@ -7,7 +7,19 @@ defmodule Mellifera.Accounts.User do
   schema "users" do
     field :name, :string
     field :email, :string
-    field :phone, :string
+
+    field :roles, Ecto.Enum,
+      values: [
+        # internal users
+        :admin,
+        :grader,
+        :observer,
+        :registrar,
+        :payment__verifier,
+        # external users
+        :participant,
+        :group_supervisor
+      ]
 
     timestamps()
   end

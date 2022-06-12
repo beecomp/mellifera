@@ -2,6 +2,7 @@ defmodule MelliferaWeb.AuthController do
   use MelliferaWeb, :controller
   plug Ueberauth
 
+  # alias Mellifera.Accounts
   alias Ueberauth.Strategy.Helpers
 
   def request(conn, _params) do
@@ -18,15 +19,18 @@ defmodule MelliferaWeb.AuthController do
     IO.inspect(auth)
 
     conn
+    |> put_flash(:info, "hello!")
     |> redirect(to: "/")
 
-    # case UserFromAuth.find_or_create(auth) do
+    # user = Accounts.fetch_or_create(auth)
+    # conn
+    # |> put_flash(:info, "Successfully authenticated.")
+    # |> put_session(:current_user, user)
+    # |> configure_session(renew: true)
+    # |> redirect(to: "/")
+
+    # case Accounts.fetch_or_create(auth) do
     #   {:ok, user} ->
-    #     conn
-    #     |> put_flash(:info, "Successfully authenticated.")
-    #     |> put_session(:current_user, user)
-    #     |> configure_session(renew: true)
-    #     |> redirect(to: "/")
 
     #   {:error, reason} ->
     #     conn

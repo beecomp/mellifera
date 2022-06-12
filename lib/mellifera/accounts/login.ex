@@ -5,9 +5,9 @@ defmodule Mellifera.Accounts.Login do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "logins" do
-    field :extra, :map, redact: true
     field :uid, :string
-    field :user_id, :binary_id
+    field :user, :binary_id
+    field :extra, :map, redact: true
 
     timestamps()
   end
